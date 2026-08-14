@@ -1,0 +1,2342 @@
+/* ==========================================================================
+   1. VARIABLES & SYSTEM DESIGN
+   ========================================================================== */
+:root {
+  /* Colors - Dark Mode (Default) */
+  --bg-primary: #08090D;
+  --bg-secondary: #0F111A;
+  --surface-glass: rgba(18, 20, 29, 0.65);
+  --surface-glass-hover: rgba(28, 31, 46, 0.85);
+  --border-glass: rgba(255, 255, 255, 0.08);
+  --border-glass-hover: rgba(255, 255, 255, 0.2);
+
+  --text-main: #F3F4F6;
+  --text-muted: #8A8F9E;
+  --text-inverse: #08090D;
+
+  /* Neon Accents */
+  --neon-purple: #8B5CF6;
+  --neon-cyan: #06B6D4;
+  --neon-magenta: #EC4899;
+  --neon-blue: #3B82F6;
+
+  /* Typography */
+  --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Space Grotesk', sans-serif;
+
+  /* Layout & Spacing */
+  --container-max: 1200px;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+
+  --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Light Mode Override */
+html.light {
+  --bg-primary: #F1F5F9;
+  --bg-secondary: #E2E8F0;
+  --surface-glass: rgba(255, 255, 255, 0.85);
+  --surface-glass-hover: rgba(255, 255, 255, 0.95);
+  --border-glass: rgba(0, 0, 0, 0.08);
+  --border-glass-hover: rgba(0, 0, 0, 0.2);
+
+  --text-main: #0F172A;
+  --text-muted: #64748B;
+  --text-inverse: #FFFFFF;
+}
+
+/* ==========================================================================
+   2. RESET & BASE STYLES
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden !important;
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  font-family: var(--font-main);
+  line-height: 1.6;
+  position: relative;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+h1, h2, h3, h4, .logo-text, .section-tag {
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  font-family: inherit;
+}
+
+img, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Layout Utilities */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+.section-padding {
+  padding: 5rem 0;
+}
+
+/* Glassmorphism Base */
+.glass {
+  background: var(--surface-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.glass:hover {
+  border-color: var(--border-glass-hover);
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan), var(--neon-magenta));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.section-tag {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--neon-cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.1;
+  margin-bottom: 3rem;
+  font-weight: 800;
+  word-break: break-word;
+}
+
+/* ==========================================================================
+   3. AMBIENT BACKGROUND GLOWS
+   ========================================================================== */
+.ambient-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.35;
+  animation: orbFloat 20s infinite alternate ease-in-out;
+}
+
+.orb-1 {
+  top: -10%;
+  left: -10%;
+  width: 50vw;
+  height: 50vw;
+  background: var(--neon-purple);
+}
+
+.orb-2 {
+  top: 40%;
+  right: -15%;
+  width: 45vw;
+  height: 45vw;
+  background: var(--neon-cyan);
+  animation-delay: -5s;
+}
+
+.orb-3 {
+  bottom: -10%;
+  left: 20%;
+  width: 40vw;
+  height: 40vw;
+  background: var(--neon-magenta);
+  animation-delay: -10s;
+}
+
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.6;
+}
+
+@keyframes orbFloat {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(5%, 10%) scale(1.1); }
+  100% { transform: translate(-5%, -5%) scale(0.9); }
+}
+
+/* ==========================================================================
+   4. FLOATING NAVBAR & MOBILE MENU
+   ========================================================================== */
+.navbar-wrapper {
+  position: fixed;
+  top: 1.25rem;
+  left: 0;
+  right: 0;
+  z-index: 99999 !important;
+  padding: 0 1.25rem;
+  width: 100%;
+}
+
+.navbar {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-full);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  color: var(--text-main);
+  transition: transform var(--transition-fast);
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-link {
+  font-size: 0.938rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+
+.nav-link:hover {
+  color: var(--text-main);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.theme-btn, .hamburger-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-glass);
+  color: var(--text-main);
+  font-size: 1.2rem;
+  transition: background var(--transition-fast);
+}
+
+.theme-btn:hover, .hamburger-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.dark-icon { display: block; }
+.light-icon { display: none; }
+html.light .dark-icon { display: none; }
+html.light .light-icon { display: block; }
+
+.hamburger-btn {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hamburger-btn span {
+  width: 18px;
+  height: 2px;
+  background-color: var(--text-main);
+}
+
+/* Mobile Drawer Menu */
+.mobile-menu {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  left: 1.25rem;
+  right: 1.25rem;
+  padding: 2rem;
+  display: none !important;
+  flex-direction: column;
+  gap: 1.5rem;
+  z-index: 99998 !important;
+  background: rgba(15, 17, 26, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-glass);
+}
+
+.mobile-menu.active {
+  display: flex !important;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+html.light .mobile-menu.active {
+  background: rgba(255, 255, 255, 0.98) !important;
+}
+
+.mobile-nav-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.mobile-link {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.mobile-menu-footer {
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-glass);
+}
+
+.mobile-email {
+  font-size: 0.875rem;
+  color: var(--neon-cyan);
+}
+
+/* ==========================================================================
+   5. HERO SECTION & THREE.JS 3D CANVAS
+   ========================================================================== */
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 8rem;
+  padding-bottom: 4rem;
+}
+
+.hero-container {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.badge-glass {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.813rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.5rem;
+  color: var(--text-muted);
+}
+
+.badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #10B981;
+  box-shadow: 0 0 10px #10B981;
+}
+
+.hero-subtitle {
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 6.5vw, 5rem);
+  line-height: 1.05;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  word-wrap: break-word;
+}
+
+.hero-description {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: var(--text-muted);
+  max-width: 540px;
+  margin-bottom: 2.5rem;
+}
+
+.hero-cta-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1.8rem;
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  transition: all var(--transition-fast);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+  color: #FFFFFF;
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+}
+
+.btn-secondary {
+  background: var(--surface-glass);
+  border: 1px solid var(--border-glass);
+  color: var(--text-main);
+}
+
+.btn-secondary:hover {
+  border-color: var(--border-glass-hover);
+  background: var(--surface-glass-hover);
+}
+
+/* Three.js Hero Layout */
+.hero-media {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#canvas-3d-hero {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 130%;
+  height: 130%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.photo-card {
+  position: relative;
+  z-index: 1;
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  width: 100%;
+}
+
+.photo-wrapper {
+  aspect-ratio: 4/5;
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  position: relative;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.photo-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 1rem;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 1rem;
+}
+
+.photo-placeholder i { font-size: 3rem; }
+.photo-placeholder span { font-size: 0.813rem; font-weight: 600; letter-spacing: 0.05em; }
+
+/* ==========================================================================
+   6. STATS & O MNIE
+   ========================================================================== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.stat-card {
+  padding: 2rem 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stat-number {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 800;
+  font-family: var(--font-heading);
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.about-text-col {
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  font-size: 1.05rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   7. USŁUGI & ACCORDION (UNLIMITED HEIGHT FIX)
+   ========================================================================== */
+.accordion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.accordion-item {
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.accordion-header {
+  width: 100%;
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text-main);
+  text-align: left;
+  transition: background var(--transition-fast);
+}
+
+.accordion-header:hover {
+  background: var(--surface-glass-hover);
+}
+
+.acc-num {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--neon-cyan);
+  margin-right: 1.5rem;
+}
+
+.acc-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-weight: 700;
+  flex: 1;
+}
+
+.acc-icon {
+  font-size: 1.5rem;
+  transition: transform var(--transition-normal);
+  color: var(--text-muted);
+}
+
+.accordion-item.active .acc-icon {
+  transform: rotate(45deg);
+  color: var(--neon-purple);
+}
+
+.accordion-item .accordion-content {
+  display: none !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  padding: 0 2rem 1.5rem 2rem !important;
+}
+
+.accordion-item.active .accordion-content {
+  display: block !important;
+  opacity: 1 !important;
+}
+
+.accordion-content p {
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.acc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.acc-tags span {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-glass);
+  color: var(--neon-cyan);
+  letter-spacing: 0.05em;
+}
+
+.cta-box {
+  padding: 3rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.cta-title {
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  font-weight: 800;
+}
+
+/* ==========================================================================
+   8. PROJEKTY & MEDIA
+   ========================================================================== */
+.project-featured {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 2rem;
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  margin-bottom: 2rem;
+  align-items: center;
+}
+
+.project-media {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  aspect-ratio: 16/9;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.project-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-glass);
+  pointer-events: none;
+}
+
+.project-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.project-badges {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.05em;
+}
+
+.badge-status {
+  background: rgba(139, 92, 246, 0.2);
+  color: var(--neon-purple);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+}
+
+.badge-type {
+  background: rgba(6, 182, 212, 0.2);
+  color: var(--neon-cyan);
+  border: 1px solid rgba(6, 182, 212, 0.4);
+}
+
+.project-title {
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 800;
+}
+
+.project-desc {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.project-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-glass);
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.meta-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.meta-val {
+  font-size: 0.938rem;
+  font-weight: 600;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.project-card-placeholder {
+  padding: 3rem 2rem;
+  text-align: center;
+  border: 1px dashed var(--border-glass);
+}
+
+.placeholder-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  color: var(--text-muted);
+}
+
+.placeholder-content i {
+  font-size: 2.5rem;
+  color: var(--neon-purple);
+}
+
+/* ==========================================================================
+   9. TECHNOLOGIE & PROCES
+   ========================================================================== */
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1.25rem;
+}
+
+.tech-card {
+  padding: 1.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.tech-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--neon-cyan);
+}
+
+.tech-card i {
+  font-size: 2.25rem;
+  color: var(--neon-cyan);
+}
+
+.tech-card span {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.process-timeline {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.process-step {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.step-num {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--neon-purple);
+}
+
+.process-step h4 { font-size: 1.25rem; font-weight: 700; }
+.process-step p { font-size: 0.938rem; color: var(--text-muted); }
+
+/* ==========================================================================
+   10. KONTAKT & FORMULARZ
+   ========================================================================== */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: 2rem;
+}
+
+.form-wrapper { padding: 2.5rem; }
+
+.form-steps-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+}
+
+.step-dot {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-glass);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.step-dot.active {
+  background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan));
+  color: #FFFFFF;
+  border-color: transparent;
+}
+
+.step-line {
+  flex: 1;
+  height: 2px;
+  background: var(--border-glass);
+  margin: 0 0.5rem;
+}
+
+.form-step { display: none; flex-direction: column; gap: 1.25rem; }
+.form-step.active { display: flex; }
+
+.form-step h3 { font-size: 1.2rem; font-weight: 700; color: var(--neon-cyan); margin-bottom: 0.5rem; }
+
+.input-group { display: flex; flex-direction: column; gap: 0.5rem; }
+.input-group label, .label-heading { font-size: 0.875rem; font-weight: 600; color: var(--text-main); }
+
+.input-group input, .input-group textarea {
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  border-radius: var(--radius-sm);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-glass);
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 0.938rem;
+}
+
+.input-group input:focus, .input-group textarea:focus {
+  border-color: var(--neon-purple);
+  outline: none;
+}
+
+.project-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.radio-card {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.radio-card input { accent-color: var(--neon-purple); }
+
+.checkbox-group { display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.875rem; color: var(--text-muted); }
+.checkbox-group input { margin-top: 0.2rem; accent-color: var(--neon-purple); }
+
+.form-btn-group { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1rem; }
+.summary-box { padding: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.938rem; }
+.status-msg { font-size: 0.875rem; font-weight: 600; margin-top: 1rem; text-align: center; }
+.status-msg.success { color: #10B981; }
+
+.contact-info-col { display: flex; flex-direction: column; gap: 1.25rem; }
+.info-card { padding: 1.75rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.info-card i { font-size: 1.75rem; color: var(--neon-purple); }
+.info-card h4 { font-size: 1.1rem; }
+.info-card a, .info-card p { color: var(--text-muted); font-size: 0.938rem; }
+.info-card a:hover { color: var(--neon-cyan); }
+
+/* ==========================================================================
+   11. FOOTER
+   ========================================================================== */
+.footer {
+  padding-top: 4rem;
+  padding-bottom: 2rem;
+  border-top: 1px solid var(--border-glass);
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.footer-brand { display: flex; flex-direction: column; gap: 0.5rem; }
+.footer-logo { display: flex; align-items: center; gap: 0.5rem; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem; }
+.footer-brand h3 { font-size: 1.2rem; }
+.footer-brand p { color: var(--text-muted); font-size: 0.875rem; }
+
+.footer-links h4, .footer-socials h4 { font-size: 1rem; margin-bottom: 1rem; color: var(--text-main); }
+.footer-links ul, .footer-socials ul { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+.footer-links a, .footer-socials a { color: var(--text-muted); font-size: 0.875rem; }
+.footer-links a:hover, .footer-socials a:hover { color: var(--text-main); }
+
+.footer-bottom {
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-glass);
+  text-align: center;
+  font-size: 0.813rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   12. RWD RESPONSIVE FIXES (320px - 600px Focus)
+   ========================================================================== */
+@media (max-width: 992px) {
+  .nav-links { display: none; }
+  .hamburger-btn { display: flex; }
+  .hero-container, .about-grid, .project-featured, .contact-grid, .footer-container { grid-template-columns: 1fr; }
+  .process-timeline { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .container { padding: 0 0.875rem !important; }
+  .section-padding { padding: 3.5rem 0; }
+  
+  .navbar-wrapper { padding: 0 0.75rem !important; }
+  .navbar { padding: 0.6rem 1rem !important; }
+  .nav-actions { gap: 0.5rem !important; }
+  .theme-btn, .hamburger-btn { width: 38px !important; height: 38px !important; }
+
+  .hero-cta-group { gap: 0.6rem !important; flex-direction: column; }
+  .btn { width: 100%; justify-content: center; padding: 0.65rem 1.25rem !important; font-size: 0.8rem !important; }
+
+  .photo-card { padding: 0.5rem !important; margin-top: 1rem !important; }
+  .photo-wrapper { aspect-ratio: 16/9 !important; max-height: 200px !important; }
+
+  .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 0.75rem !important; }
+  .stat-card { padding: 1.25rem 0.5rem !important; }
+  .stat-number { font-size: 1.6rem !important; }
+  .stat-label { font-size: 0.725rem !important; word-break: break-word !important; }
+
+  .projects-grid, .project-options-grid { grid-template-columns: 1fr; }
+  .form-wrapper { padding: 1.5rem 1rem; }
+  .accordion-header { padding: 1.25rem 1rem; }
+  .accordion-item .accordion-content { padding: 0 1rem 1.25rem 1rem !important; }
+}
+/* ==========================================================================
+   7. USŁUGI & ACCORDION (UNLIMITED HEIGHT FIX)
+   ========================================================================== */
+.accordion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.accordion-item {
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.accordion-header {
+  width: 100%;
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text-main);
+  text-align: left;
+  transition: background var(--transition-fast);
+}
+
+.accordion-header:hover {
+  background: var(--surface-glass-hover);
+}
+
+.acc-num {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--neon-cyan);
+  margin-right: 1.5rem;
+}
+
+.acc-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-weight: 700;
+  flex: 1;
+}
+
+.acc-icon {
+  font-size: 1.5rem;
+  transition: transform var(--transition-normal);
+  color: var(--text-muted);
+}
+
+.accordion-item.active .acc-icon {
+  transform: rotate(45deg);
+  color: var(--neon-purple);
+}
+
+.accordion-item .accordion-content {
+  display: none !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  padding: 0 2rem 1.5rem 2rem !important;
+}
+
+.accordion-item.active .accordion-content {
+  display: block !important;
+  opacity: 1 !important;
+}
+
+.accordion-content p {
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.acc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.acc-tags span {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-glass);
+  color: var(--neon-cyan);
+  letter-spacing: 0.05em;
+}
+
+.cta-box {
+  padding: 3rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.cta-title {
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  font-weight: 800;
+}
+
+/* ==========================================================================
+   8. PROJEKTY & MEDIA
+   ========================================================================== */
+.project-featured {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 2rem;
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  margin-bottom: 2rem;
+  align-items: center;
+}
+
+.project-media {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  aspect-ratio: 16/9;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.project-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-glass);
+  pointer-events: none;
+}
+
+.project-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.project-badges {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.05em;
+}
+
+.badge-status {
+  background: rgba(139, 92, 246, 0.2);
+  color: var(--neon-purple);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+}
+
+.badge-type {
+  background: rgba(6, 182, 212, 0.2);
+  color: var(--neon-cyan);
+  border: 1px solid rgba(6, 182, 212, 0.4);
+}
+
+.project-title {
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 800;
+}
+
+.project-desc {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.project-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-glass);
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.meta-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.meta-val {
+  font-size: 0.938rem;
+  font-weight: 600;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.project-card-placeholder {
+  padding: 3rem 2rem;
+  text-align: center;
+  border: 1px dashed var(--border-glass);
+}
+
+.placeholder-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  color: var(--text-muted);
+}
+
+.placeholder-content i {
+  font-size: 2.5rem;
+  color: var(--neon-purple);
+}
+
+/* ==========================================================================
+   9. TECHNOLOGIE & PROCES
+   ========================================================================== */
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1.25rem;
+}
+
+.tech-card {
+  padding: 1.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.tech-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--neon-cyan);
+}
+
+.tech-card i {
+  font-size: 2.25rem;
+  color: var(--neon-cyan);
+}
+
+.tech-card span {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.process-timeline {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.process-step {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.step-num {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--neon-purple);
+}
+
+.process-step h4 { font-size: 1.25rem; font-weight: 700; }
+.process-step p { font-size: 0.938rem; color: var(--text-muted); }
+
+/* ==========================================================================
+   10. KONTAKT & FORMULARZ
+   ========================================================================== */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: 2rem;
+}
+
+.form-wrapper { padding: 2.5rem; }
+
+.form-steps-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+}
+
+.step-dot {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-glass);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.step-dot.active {
+  background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan));
+  color: #FFFFFF;
+  border-color: transparent;
+}
+
+.step-line {
+  flex: 1;
+  height: 2px;
+  background: var(--border-glass);
+  margin: 0 0.5rem;
+}
+
+.form-step { display: none; flex-direction: column; gap: 1.25rem; }
+.form-step.active { display: flex; }
+
+.form-step h3 { font-size: 1.2rem; font-weight: 700; color: var(--neon-cyan); margin-bottom: 0.5rem; }
+
+.input-group { display: flex; flex-direction: column; gap: 0.5rem; }
+.input-group label, .label-heading { font-size: 0.875rem; font-weight: 600; color: var(--text-main); }
+
+.input-group input, .input-group textarea {
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  border-radius: var(--radius-sm);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-glass);
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 0.938rem;
+}
+
+.input-group input:focus, .input-group textarea:focus {
+  border-color: var(--neon-purple);
+  outline: none;
+}
+
+.project-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.radio-card {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.radio-card input { accent-color: var(--neon-purple); }
+
+.checkbox-group { display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.875rem; color: var(--text-muted); }
+.checkbox-group input { margin-top: 0.2rem; accent-color: var(--neon-purple); }
+
+.form-btn-group { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1rem; }
+.summary-box { padding: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.938rem; }
+.status-msg { font-size: 0.875rem; font-weight: 600; margin-top: 1rem; text-align: center; }
+.status-msg.success { color: #10B981; }
+
+.contact-info-col { display: flex; flex-direction: column; gap: 1.25rem; }
+.info-card { padding: 1.75rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.info-card i { font-size: 1.75rem; color: var(--neon-purple); }
+.info-card h4 { font-size: 1.1rem; }
+.info-card a, .info-card p { color: var(--text-muted); font-size: 0.938rem; }
+.info-card a:hover { color: var(--neon-cyan); }
+
+/* ==========================================================================
+   11. FOOTER
+   ========================================================================== */
+.footer {
+  padding-top: 4rem;
+  padding-bottom: 2rem;
+  border-top: 1px solid var(--border-glass);
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.footer-brand { display: flex; flex-direction: column; gap: 0.5rem; }
+.footer-logo { display: flex; align-items: center; gap: 0.5rem; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem; }
+.footer-brand h3 { font-size: 1.2rem; }
+.footer-brand p { color: var(--text-muted); font-size: 0.875rem; }
+
+.footer-links h4, .footer-socials h4 { font-size: 1rem; margin-bottom: 1rem; color: var(--text-main); }
+.footer-links ul, .footer-socials ul { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+.footer-links a, .footer-socials a { color: var(--text-muted); font-size: 0.875rem; }
+.footer-links a:hover, .footer-socials a:hover { color: var(--text-main); }
+
+.footer-bottom {
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-glass);
+  text-align: center;
+  font-size: 0.813rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   12. RWD RESPONSIVE FIXES (320px - 600px Focus)
+   ========================================================================== */
+@media (max-width: 992px) {
+  .nav-links { display: none; }
+  .hamburger-btn { display: flex; }
+  .hero-container, .about-grid, .project-featured, .contact-grid, .footer-container { grid-template-columns: 1fr; }
+  .process-timeline { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .container { padding: 0 0.875rem !important; }
+  .section-padding { padding: 3.5rem 0; }
+  
+  .navbar-wrapper { padding: 0 0.75rem !important; }
+  .navbar { padding: 0.6rem 1rem !important; }
+  .nav-actions { gap: 0.5rem !important; }
+  .theme-btn, .hamburger-btn { width: 38px !important; height: 38px !important; }
+
+  .hero-cta-group { gap: 0.6rem !important; flex-direction: column; }
+  .btn { width: 100%; justify-content: center; padding: 0.65rem 1.25rem !important; font-size: 0.8rem !important; }
+
+  .photo-card { padding: 0.5rem !important; margin-top: 1rem !important; }
+  .photo-wrapper { aspect-ratio: 16/9 !important; max-height: 200px !important; }
+
+  .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 0.75rem !important; }
+  .stat-card { padding: 1.25rem 0.5rem !important; }
+  .stat-number { font-size: 1.6rem !important; }
+  .stat-label { font-size: 0.725rem !important; word-break: break-word !important; }
+
+  .projects-grid, .project-options-grid { grid-template-columns: 1fr; }
+  .form-wrapper { padding: 1.5rem 1rem; }
+  .accordion-header { padding: 1.25rem 1rem; }
+  .accordion-item .accordion-content { padding: 0 1rem 1.25rem 1rem !important; }
+}
+/* ==========================================================================
+   CSS SCROLL REVEAL ANIMATIONS
+   ========================================================================== */
+/* Stan początkowy dla animowanych elementów */
+.reveal {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+/* Stan aktywny po przewinięciu */
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Kaskadowe opóźnienia dla siatek (Stagger Effect) */
+.stats-grid .stat-card:nth-child(1) { transition-delay: 0.1s; }
+.stats-grid .stat-card:nth-child(2) { transition-delay: 0.2s; }
+.stats-grid .stat-card:nth-child(3) { transition-delay: 0.3s; }
+.stats-grid .stat-card:nth-child(4) { transition-delay: 0.4s; }
+
+.tech-grid .tech-card:nth-child(odd) { transition-delay: 0.1s; }
+.tech-grid .tech-card:nth-child(even) { transition-delay: 0.2s; }
+
+.process-timeline .process-step:nth-child(1) { transition-delay: 0.1s; }
+.process-timeline .process-step:nth-child(2) { transition-delay: 0.2s; }
+.process-timeline .process-step:nth-child(3) { transition-delay: 0.3s; }
+
+/* Efekt najechania myszką / dotyku na kafelki */
+.glass {
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px -10px rgba(139, 92, 246, 0.25);
+}
+/* RWD FIX FOR FORM */
+.contact-grid {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.form-wrapper {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  .form-wrapper {
+    padding: 1.25rem 0.875rem !important;
+  }
+  .form-steps-indicator {
+    gap: 0.25rem !important;
+  }
+  .step-dot {
+    width: 30px !important;
+    height: 30px !important;
+    font-size: 0.75rem !important;
+  }
+}
+/* ==========================================================================
+   FIX DLA FORMULARZA NA TELEFONACH (RWD)
+   ========================================================================== */
+
+/* Zmniejszenie kółeczek i odstępów, aby 01, 02, 03, 04 zawsze mieściły się w 1 linii */
+@media (max-width: 480px) {
+  .form-steps-indicator {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin-bottom: 1.25rem !important;
+  }
+
+  .step-dot {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    font-size: 0.7rem !important;
+  }
+
+  .step-line {
+    flex: 1 !important;
+    margin: 0 4px !important;
+    min-width: 10px !important;
+  }
+
+  /* Naprawa wewnętrznych odstępów ramki formularza */
+  .form-wrapper {
+    padding: 1rem 0.75rem !important;
+  }
+
+  /* Naprawa przycisków na dole, by nie wystawały */
+  .form-actions {
+    display: flex !important;
+    gap: 0.5rem !important;
+    width: 100% !important;
+  }
+
+  .form-actions .btn {
+    padding: 0.6rem 0.8rem !important;
+    font-size: 0.8rem !important;
+    flex: 1 !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+}
+/* ==========================================================================
+   COOKIE CONSENT BANNER
+   ========================================================================== */
+.cookie-banner {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 40px);
+  max-width: 800px;
+  z-index: 9999;
+  padding: 1.25rem 1.5rem;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.cookie-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cookie-icon {
+  font-size: 2rem;
+  color: #8b5cf6;
+  flex-shrink: 0;
+}
+
+.cookie-text h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.cookie-text p {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.cookie-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.btn-outline-sm {
+  padding: 0.6rem 1rem;
+  font-size: 0.825rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-outline-sm:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-primary-sm {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.825rem;
+  background: linear-gradient(135deg, #00f2fe, #8b5cf6);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary-sm:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(139, 92, 246, 0.4);
+}
+
+/* RWD dla telefonów */
+@media (max-width: 640px) {
+  .cookie-banner {
+    bottom: 12px;
+    width: calc(100% - 24px);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .cookie-actions {
+    width: 100%;
+  }
+
+  .cookie-actions button {
+    flex: 1;
+    text-align: center;
+  }
+}
+/* ==========================================================================
+   BALANCED FROSTED GLASS (WYRAZISTE SZKŁO + DOBRA WYDAJNOŚĆ)
+   ========================================================================== */
+
+/* Wyraziste, rozmyte szkło na komputerach */
+.accordion-item,
+.service-card,
+.project-card,
+.tech-card,
+.glass {
+  background: rgba(18, 20, 29, 0.55) !important;
+  backdrop-filter: blur(10px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(140%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Zoptymalizowane szkło 8px na telefony */
+@media (max-width: 768px) {
+  .accordion-item,
+  .service-card,
+  .project-card,
+  .tech-card,
+  .glass {
+    backdrop-filter: blur(8px) saturate(130%) !important;
+    -webkit-backdrop-filter: blur(8px) saturate(130%) !important;
+    background: rgba(15, 17, 25, 0.65) !important;
+  }
+}
+/* ==========================================================================
+   MICRO-INTERACTIONS & BACK TO TOP BUTTON
+   ========================================================================== */
+
+/* Powiadomienie Toast */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: rgba(18, 20, 29, 0.95);
+  border: 1px solid var(--neon-cyan, #00f2fe);
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 10px 30px rgba(0, 242, 254, 0.25);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 9999;
+}
+
+.toast.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast i {
+  color: var(--neon-cyan, #00f2fe);
+  font-size: 1.1rem;
+}
+
+/* Przycisk Back to Top */
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(18, 20, 29, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.8);
+  transition: all 0.3s ease;
+  z-index: 900;
+  backdrop-filter: blur(8px);
+}
+
+.back-to-top.show {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+}
+
+.back-to-top:hover {
+  background: var(--neon-cyan, #00f2fe);
+  color: #08090d;
+  border-color: var(--neon-cyan, #00f2fe);
+  box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+  transform: translateY(-3px);
+}
+/* ==========================================================================
+   BACK TO TOP BUTTON (FROSTED GLASS + AUTO HIDE)
+   ========================================================================== */
+
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 25px;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px; /* Szklany kafel z zaokrąglonymi rogami */
+  background: rgba(18, 20, 29, 0.55) !important;
+  backdrop-filter: blur(8px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(8px) saturate(140%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff;
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px) scale(0.9);
+  transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s, background 0.3s, border-color 0.3s;
+  z-index: 900;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* Stan widoczny podczas scrollowania */
+.back-to-top.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+/* Efekt po najechaniu myszką (PC) */
+.back-to-top:hover {
+  background: rgba(0, 242, 254, 0.15) !important;
+  border-color: var(--neon-cyan, #00f2fe) !important;
+  color: var(--neon-cyan, #00f2fe);
+  box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+  transform: translateY(-3px) scale(1.03);
+}
+/* ==========================================================================
+   BOTTOM DOCK OVERLAY - BACK TO TOP (CENTER BOTTOM)
+   ========================================================================== */
+
+.bottom-dock-overlay {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px) scale(0.95);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 1.4rem;
+  border-radius: 30px; /* Łagodny, zaokrąglony prostokąt / pill shape */
+  background: rgba(18, 20, 29, 0.6) !important;
+  backdrop-filter: blur(10px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(140%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s, background 0.3s, border-color 0.3s;
+  z-index: 900;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  white-space: nowrap;
+}
+
+.bottom-dock-overlay i {
+  font-size: 1.1rem;
+  color: var(--neon-cyan, #00f2fe);
+}
+
+/* Stan widoczny */
+.bottom-dock-overlay.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+/* Efekt po najechaniu (PC) */
+.bottom-dock-overlay:hover {
+  background: rgba(0, 242, 254, 0.15) !important;
+  border-color: var(--neon-cyan, #00f2fe) !important;
+  color: var(--neon-cyan, #00f2fe);
+  box-shadow: 0 0 25px rgba(0, 242, 254, 0.25);
+  transform: translateX(-50%) translateY(-3px) scale(1.02);
+}
+/* ==========================================================================
+   CUSTOM NEON STYLED SCROLLBAR
+   ========================================================================== */
+
+/* Szerokość paska przewijania */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Tło paska (tor, po którym porusza się suwak) */
+::-webkit-scrollbar-track {
+  background: #08090d;
+}
+
+/* Pasek / Suwak (thumb) */
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  border: 2px solid #08090d; /* Odstęp od krawędzi */
+  transition: background 0.3s ease;
+}
+
+/* Stan po najechaniu lub chwyceniu suwaka */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neon-cyan, #00f2fe);
+  box-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+}
+
+/* Wiersz styli dla Firefoxa */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) #08090d;
+}/* ==========================================================================
+   PORTRAIT PHOTO CARD (PROPORCJE 9:16)
+   ========================================================================== */
+
+/* Wymuszenie proporcji 9:16 dla kafelka zdjęcia */
+.about-photo,
+.about-image-card,
+.about-image,
+div[class*="photo"],
+div[class*="about-img"] {
+  aspect-ratio: 9 / 16 !important;
+  width: 100% !important;
+  max-width: 320px !important; /* Szerokość dostosowana pod telefon */
+  height: auto !important;
+  min-height: 480px !important; /* Dłuższy, pionowy profil 9:16 */
+  margin: 0 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+/* ==========================================================================
+   PORTRAIT PHOTO CARD 9:16 (PERFECT CENTERED PLACEHOLDER)
+   ========================================================================== */
+
+/* Główny duży kafelek 9:16 */
+.about-photo,
+.about-image-card,
+.about-image,
+div[class*="photo"],
+div[class*="about-img"] {
+  aspect-ratio: 9 / 16 !important;
+  width: 100% !important;
+  max-width: 320px !important;
+  height: auto !important;
+  min-height: 480px !important;
+  margin: 0 auto !important;
+  
+  /* Układ CSS Grid wymuszający wyśrodkowanie w pionie */
+  display: grid !important;
+  place-content: center !important;
+  place-items: center !important;
+  position: relative !important;
+}
+
+/* Wewnętrzna ramka/placeholder — zresetowanie wysokości i marginesów */
+.about-photo > *,
+.about-image-card > *,
+div[class*="photo"] > *,
+div[class*="about-img"] > * {
+  margin: 0 !important;
+  padding: 0 !important;
+  height: auto !important;
+  width: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  transform: none !important;
+  top: auto !important;
+  position: relative !important;
+}
+/* ==========================================================================
+   POPRAWKI MOBILNE: TAP HIGHLIGHT, PŁYNNY AKORDEON I MENU
+   ========================================================================== */
+
+/* 1. Usunięcie niebieskiego podświetlenia po dotknięciu */
+*,
+*::before,
+*::after,
+a,
+button,
+div,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent !important;
+  outline: none !important;
+  user-select: none;
+}
+
+/* 2. Płynne, dynamiczne rozwijanie akordeonu usług */
+.accordion-content,
+.service-content {
+  display: grid !important;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              opacity 0.3s ease, 
+              padding 0.35s ease !important;
+  opacity: 0;
+  overflow: hidden !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Stan otwarty akordeonu */
+.accordion-item.active .accordion-content,
+.service-card.active .service-content,
+.accordion-item[open] .accordion-content {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  padding-top: 1rem !important;
+  padding-bottom: 1.25rem !important;
+}
+
+.accordion-content > div,
+.service-content > div {
+  min-height: 0;
+}
+
+/* Obrót i zmiana ikony plus/krzyżyk */
+.accordion-header i,
+.service-header i {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.accordion-item.active .accordion-header i,
+.service-card.active .service-header i {
+  transform: rotate(45deg);
+}
+
+/* 3. Płynne, sprężyste wysuwanie menu mobilnego */
+.mobile-nav,
+.nav-menu.active,
+.mobile-menu {
+  display: flex !important;
+  flex-direction: column;
+  transform-origin: top center;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              opacity 0.3s ease, 
+              visibility 0.35s ease !important;
+}
+
+.mobile-nav:not(.active),
+.mobile-menu:not(.active) {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(-15px) scaleY(0.95) !important;
+  pointer-events: none;
+}
+
+.mobile-nav.active,
+.mobile-menu.active {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(0) scaleY(1) !important;
+  pointer-events: all;
+}
+/* ==========================================================================
+   NAPRAWA PROSTOKĄTA I ZAOKRĄGLENIE CAŁEGO ROZWINIĘTEGO KAFELKA
+   ========================================================================== */
+
+/* 1. Wymuszenie zaokrąglenia dla całej karty usługi w każdym stanie */
+.service-card,
+.accordion-item,
+.service-item,
+div[class*="service"],
+div[class*="accordion"] {
+  border-radius: 20px !important;
+  overflow: hidden !important; /* Obcina wszelkie ostre prostokąty wystające ze środka */
+}
+
+/* 2. Zaokrąglenie wnętrza, tła i zawartości po otwarciu */
+.service-card.active,
+.accordion-item.active,
+.service-content,
+.accordion-content,
+.service-body,
+.accordion-body {
+  border-radius: 0 0 20px 20px !important; /* Dół kafelka ładnie zaokrąglony */
+}
+
+/* 3. Jeśli nakłada się pseudoelement (niebieski prostokąt gradientu / glow) */
+.service-card::before,
+.service-card::after,
+.accordion-item::before,
+.accordion-item::after,
+.service-content::before,
+.service-content::after {
+  border-radius: 20px !important;
+}
+
+/* 4. Wszystkie klocki i ramki wewnątrz */
+.service-content > *,
+.accordion-content > *,
+.service-content div,
+.service-content li {
+  border-radius: 14px !important;
+}
+/* ==========================================================================
+   OSTATECZNE ZAOKRĄGLENIE ROZWIJANEGO PROSTOKĄTA USŁUG
+   ========================================================================== */
+
+/* 1. Główny kafelek - obcina wszystko na sztywno do 20px */
+.service-item,
+.service-card,
+.accordion-item,
+details {
+  border-radius: 20px !important;
+  overflow: hidden !important;
+}
+
+/* 2. Ciemny prostokąt, który się rozwija (wszystkie możliwe kontenery wnętrza) */
+.service-body,
+.service-details,
+.service-dropdown,
+.service-content,
+.service-collapse,
+.accordion-collapse,
+.accordion-content,
+details > div,
+details[open] > div {
+  border-radius: 0 0 20px 20px !important;
+  overflow: hidden !important;
+}
+
+/* 3. Wewnętrzny boks z tekstem (żeby nie był przyklejony do rogów) */
+.service-body > *,
+.service-details > *,
+.service-content > *,
+.accordion-content > * {
+  border-radius: 16px !important;
+}
+/* ==========================================================================
+   KOMPLETNE ZAOKRĄGLENIE DLA WSZYSTKICH KAFELKÓW USŁUG (01, 02, 03, ...)
+   ========================================================================== */
+
+/* 1. Wszystkie kafelki w sekcji usług - zawsze zaokrąglone i przycięte */
+#services .service-card,
+#services .service-item,
+#services .accordion-item,
+#services [class*="service"],
+#services [class*="accordion"] {
+  border-radius: 20px !important;
+  overflow: hidden !important;
+}
+
+/* 2. Wszystkie tła, nakładki i pseudoelementy (::before, ::after) */
+#services .service-card::before,
+#services .service-card::after,
+#services .service-item::before,
+#services .service-item::after,
+#services .accordion-item::before,
+#services .accordion-item::after,
+#services [class*="service"]::before,
+#services [class*="service"]::after {
+  border-radius: 20px !important;
+  overflow: hidden !important;
+}
+
+/* 3. Wnętrze po rozwinięciu (dół kafelka) dla każdej usługi */
+#services .service-content,
+#services .service-details,
+#services .service-body,
+#services .service-collapse,
+#services .accordion-content,
+#services [class*="content"],
+#services [class*="body"],
+#services [class*="details"] {
+  border-radius: 0 0 20px 20px !important;
+  overflow: hidden !important;
+}
+
+/* 4. Wewnętrzne ciemne boksy z tekstem/wynikami */
+#services .service-content > div,
+#services .service-details > div,
+#services .accordion-content > div,
+#services [class*="deliverable"],
+#services [class*="result"],
+#services [class*="feature"] {
+  border-radius: 14px !important;
+}
+/* ==========================================================================
+   CUSTOM NEON CURSOR (DESKTOP ONLY)
+   ========================================================================== */
+
+/* Ukrycie domyślnego kursora tylko na urządzeniach z myszką */
+@media (hover: hover) and (pointer: fine) {
+  body {
+    cursor: none !important;
+  }
+  a, button, [role="button"], input, select, textarea {
+    cursor: none !important;
+  }
+}
+
+/* Kropka środkowa */
+.custom-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background-color: var(--neon-cyan, #00f2fe);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.05s ease, opacity 0.2s ease;
+  box-shadow: 0 0 10px rgba(0, 242, 254, 0.8);
+}
+
+/* Zewnętrzny pierścień z opóźnieniem */
+.custom-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid rgba(0, 242, 254, 0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, transform 0.15s ease-out;
+  backdrop-filter: blur(1px);
+}
+
+/* Stan po najechaniu na interaktywny element */
+.custom-cursor-ring.cursor-hover {
+  width: 54px;
+  height: 54px;
+  background-color: rgba(0, 242, 254, 0.1);
+  border-color: var(--neon-cyan, #00f2fe);
+  box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+}
+
+/* Ukrycie customowego kursora na smartfonach i tabletach */
+@media (hover: none) and (pointer: coarse) {
+  .custom-cursor-dot,
+  .custom-cursor-ring {
+    display: none !important;
+  }
+}
+/* ==========================================================================
+   AWWWARDS FX: PROGRESS BAR, SPOTLIGHT GLOW, BLUR REVEAL
+   ========================================================================== */
+
+/* 1. NEON SCROLL PROGRESS BAR */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, #00f2fe 0%, #4facfe 50%, #7f00ff 100%);
+  box-shadow: 0 0 12px rgba(0, 242, 254, 0.8), 0 0 4px #00f2fe;
+  z-index: 999999;
+  pointer-events: none;
+  transition: width 0.08s linear;
+}
+
+/* 2. SPOTLIGHT CARD GLOW */
+.service-card,
+.service-item,
+.project-card,
+.about-card,
+.stat-card,
+.bento-card {
+  position: relative !important;
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+  --spotlight-opacity: 0;
+}
+
+.service-card::before,
+.service-item::before,
+.project-card::before,
+.about-card::before,
+.stat-card::before,
+.bento-card::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: inherit !important;
+  background: radial-gradient(
+    400px circle at var(--mouse-x) var(--mouse-y),
+    rgba(0, 242, 254, 0.12),
+    transparent 60%
+  ) !important;
+  opacity: var(--spotlight-opacity) !important;
+  transition: opacity 0.4s ease !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+/* 3. BLUR-TO-FOCUS SCROLL REVEAL */
+.reveal-element {
+  opacity: 0;
+  transform: translateY(35px);
+  filter: blur(8px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, filter;
+}
+
+.reveal-element.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
