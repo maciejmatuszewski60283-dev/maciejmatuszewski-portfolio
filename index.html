@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="pl" class="dark">
+<head>
+    <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO Primary Meta Tags -->
+  <title>Maciej Matuszewski — Web Developer & Interface Designer | Poznań</title>
+  <meta name="title" content="Maciej Matuszewski — Web Developer & Interface Designer | Poznań">
+  <meta name="description" content="Projektuję i tworzę nowoczesne, szybkie strony internetowe oraz interfejsy cyfrowe. Sprawdź moje portfolio i zrealizuj ze mną swój projekt!">
+  <meta name="keywords" content="Maciej Matuszewski, Web Developer, Tworzenie Stron Internetowych Poznań, UI UX Designer, Strony WWW, Frontend Developer, Freelancer Poznań">
+  <meta name="author" content="Maciej Matuszewski">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#08090d">
+
+  <!-- Open Graph / Facebook / Messenger / WhatsApp -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://maciejmatuszewski.pl/">
+  <meta property="og:title" content="Maciej Matuszewski — Web Developer & Interface Designer">
+  <meta property="og:description" content="Nowoczesne strony internetowe, dopracowany design i cyfrowe doświadczenia. Zobacz moje projekty!">
+  <meta property="og:image" content="https://maciejmatuszewski.pl/assets/images/og-cover.png">
+
+  <!-- Twitter / X Meta Tags -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://maciejmatuszewski.pl/">
+  <meta property="twitter:title" content="Maciej Matuszewski — Web Developer & Interface Designer">
+  <meta property="twitter:description" content="Nowoczesne strony internetowe, dopracowany design i cyfrowe doświadczenia. Zobacz moje projekty!">
+  <meta property="twitter:image" content="https://maciejmatuszewski.pl/assets/images/og-cover.png">
+
+  <!-- Favicon / Ikonka w przeglądarce -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/logo.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/logo.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Remix Icon -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+  <!-- Three.js Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- GSAP & ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- Background Ambient Glows -->
+  <div class="ambient-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="grid-overlay"></div>
+  </div>
+
+  <!-- Header / Floating Glass Navbar -->
+  <header class="navbar-wrapper">
+    <nav class="navbar glass">
+      <a href="#home" class="logo" aria-label="Strona główna">
+  <img src="assets/images/logo.png" alt="Logo" style="height: 36px; width: auto; object-fit: contain; border-radius: 8px;">
+</a>
+
+      <ul class="nav-links">
+        <li><a href="#about" class="nav-link">O mnie</a></li>
+        <li><a href="#services" class="nav-link">Usługi</a></li>
+        <li><a href="#projects" class="nav-link">Projekty</a></li>
+        <li><a href="#tech" class="nav-link">Technologie</a></li>
+        <li><a href="#process" class="nav-link">Proces</a></li>
+        <li><a href="#contact" class="nav-link">Kontakt</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button id="theme-toggle" class="theme-btn" aria-label="Przełącz motyw">
+          <i class="ri-moon-line dark-icon"></i>
+          <i class="ri-sun-line light-icon"></i>
+        </button>
+        <button id="menu-toggle" class="hamburger-btn" aria-label="Otwórz menu">
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Drawer Menu -->
+    <div class="mobile-menu glass">
+      <ul class="mobile-nav-links">
+        <li><a href="#about" class="mobile-link">O mnie</a></li>
+        <li><a href="#services" class="mobile-link">Usługi</a></li>
+        <li><a href="#projects" class="mobile-link">Projekty</a></li>
+        <li><a href="#tech" class="mobile-link">Technologie</a></li>
+        <li><a href="#process" class="mobile-link">Proces</a></li>
+        <li><a href="#contact" class="mobile-link">Kontakt</a></li>
+      </ul>
+      <div class="mobile-menu-footer">
+        <a href="mailto:kontakt@maciejmatuszewski.pl" class="mobile-email">kontakt@maciejmatuszewski.pl</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- 1. HERO SECTION -->
+    <section id="home" class="hero-section">
+      <div class="container hero-container">
+        <div class="hero-content">
+          <div class="hero-badge badge-glass">
+            <span class="badge-dot"></span>
+            POZNAŃ · POLAND
+          </div>
+          
+          <p class="hero-subtitle">WEB DEVELOPER · INTERFACE DESIGNER</p>
+          
+          <h1 class="hero-title">
+            TWORZĘ<br>
+            <span class="gradient-text">CYFROWE</span><br>
+            DOŚWIADCZENIA.
+          </h1>
+
+          <p class="hero-description">
+            Projektuję i tworzę nowoczesne strony internetowe, aplikacje oraz interfejsy, które łączą technologię, estetykę i dopracowany design.
+          </p>
+
+          <div class="hero-cta-group">
+            <a href="#projects" class="btn btn-primary">
+              <span>ZOBACZ PROJEKTY</span>
+              <i class="ri-arrow-up-right-line"></i>
+            </a>
+            <a href="#contact" class="btn btn-secondary">
+              <span>POROZMAWIAJMY</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-media">
+          <!-- 3D Canvas -->
+          <div id="canvas-3d-hero"></div>
+
+          <div class="photo-card glass">
+            <div class="photo-wrapper">
+              <img src="assets/images/maciej.jpg" alt="Maciej Matuszewski" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div class="photo-placeholder">
+                <i class="ri-user-3-line"></i>
+                <span>YOUR PHOTO / MACIEJ MATUSZEWSKI</span>
+              </div>
+            </div>
+            <div class="photo-glow"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS SECTION -->
+    <section class="stats-section">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-card glass">
+            <span class="stat-number gradient-text">150+</span>
+            <span class="stat-label">projektów</span>
+          </div>
+          <div class="stat-card glass">
+            <span class="stat-number gradient-text">30+</span>
+            <span class="stat-label">klientów</span>
+          </div>
+          <div class="stat-card glass">
+            <span class="stat-number gradient-text">8 lat</span>
+            <span class="stat-label">doświadczenia</span>
+          </div>
+          <div class="stat-card glass">
+            <span class="stat-number gradient-text">40</span>
+            <span class="stat-label">stron internetowych</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. O MNIE SECTION -->
+    <section id="about" class="about-section section-padding">
+      <div class="container">
+        <div class="section-tag">01 / O MNIE</div>
+        <div class="about-grid">
+          <div class="about-heading-col">
+            <h2 class="section-title">
+              TWORZĘ RZECZY,<br>
+              <span class="gradient-text">KTÓRE MAJĄ ZNACZENIE.</span>
+            </h2>
+          </div>
+          <div class="about-text-col glass">
+            <p>
+              Nazywam się Maciej Matuszewski. Mam 17 lat i od 9. roku życia interesuję się tworzeniem cyfrowych projektów.
+            </p>
+            <p>
+              Zaczynałem od eksperymentowania z programowaniem i projektowaniem. Z czasem nauczyłem się łączyć technologię z projektowaniem interfejsów i doświadczeniem użytkownika.
+            </p>
+            <p>
+              Dzisiaj tworzę strony internetowe, aplikacje, gry oraz cyfrowe rozwiązania dla własnych projektów i klientów.
+            </p>
+            <p>
+              Najważniejszy jest dla mnie efekt końcowy — projekt ma nie tylko działać, ale również dobrze wyglądać i być wygodny dla użytkownika.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- 3. USŁUGI SECTION -->
+    <section id="services" class="services-section section-padding">
+      <div class="container">
+        <div class="section-tag">02 / USŁUGI</div>
+        <h2 class="section-title">
+          TECHNOLOGIA TO NARZĘDZIE.<br>
+          <span class="gradient-text">LICZY SIĘ EFEKT.</span>
+        </h2>
+
+        <div class="accordion-list">
+          <div class="accordion-item glass">
+            <button class="accordion-header">
+              <span class="acc-num">01</span>
+              <span class="acc-title">Strony internetowe</span>
+              <i class="ri-add-line acc-icon"></i>
+            </button>
+            <div class="accordion-content">
+              <p>Tworzę nowoczesne, szybkie i w pełni responsywne strony www, które budują wizerunek i skutecznie konwertują odwiedzających.</p>
+              <div class="acc-tags">
+                <span>UX/UI</span><span>RESPONSIVE</span><span>ANIMACJE</span><span>SEO</span><span>WDROŻENIE</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item glass">
+            <button class="accordion-header">
+              <span class="acc-num">02</span>
+              <span class="acc-title">PWA</span>
+              <i class="ri-add-line acc-icon"></i>
+            </button>
+            <div class="accordion-content">
+              <p>Progressive Web Apps łączą zalety stron www i aplikacji mobilnych. Działają szybko, również offline i pozwalają na instalację na telefonie.</p>
+              <div class="acc-tags">
+                <span>OFFLINE FIRST</span><span>INSTALLABLE</span><span>FAST LOAD</span><span>CROSS-PLATFORM</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item glass">
+            <button class="accordion-header">
+              <span class="acc-num">03</span>
+              <span class="acc-title">Aplikacje</span>
+              <i class="ri-add-line acc-icon"></i>
+            </button>
+            <div class="accordion-content">
+              <p>Projektuję i wdrażam skalowalne aplikacje webowe oraz mobilne z dopracowaną logiką biznesową i przejrzystym interfejsem.</p>
+              <div class="acc-tags">
+                <span>WEB APPS</span><span>REACT / NEXT.JS</span><span>API INTEGRATION</span><span>FULLSTACK</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item glass">
+            <button class="accordion-header">
+              <span class="acc-num">04</span>
+              <span class="acc-title">Gry</span>
+              <i class="ri-add-line acc-icon"></i>
+            </button>
+            <div class="accordion-content">
+              <p>Dedykowane produkcje browserowe, minigry reklamowe oraz interaktywne doświadczenia Canvas / WebGL wciągające użytkowników.</p>
+              <div class="acc-tags">
+                <span>CANVAS</span><span>WEBGL</span><span>THREE.JS</span><span>INTERACTION</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item glass">
+            <button class="accordion-header">
+              <span class="acc-num">05</span>
+              <span class="acc-title">UI / UX</span>
+              <i class="ri-add-line acc-icon"></i>
+            </button>
+            <div class="accordion-content">
+              <p>Projektowanie przemyślanych ścieżek użytkownika, makiet, interfejsów i Design Systemów w oparciu o badania i estetykę premium.</p>
+              <div class="acc-tags">
+                <span>FIGMA</span><span>WIREFRAMING</span><span>PROTOTYPING</span><span>DESIGN SYSTEM</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item glass">
+            <button class="accordion-header">
+              <span class="acc-num">06</span>
+              <span class="acc-title">Identyfikacja wizualna</span>
+              <i class="ri-add-line acc-icon"></i>
+            </button>
+            <div class="accordion-content">
+              <p>Spójny branding, logotypy, księgi znaku, typografia oraz palety barw pozwalające Twojej marce wyróżnić się na rynku.</p>
+              <div class="acc-tags">
+                <span>LOGO DESIGN</span><span>BRANDBOOK</span><span>TYPOGRAPHY</span><span>VECTOR</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item glass">
+            <button class="accordion-header">
+              <span class="acc-num">07</span>
+              <span class="acc-title">Automatyzacje</span>
+              <i class="ri-add-line acc-icon"></i>
+            </button>
+            <div class="accordion-content">
+              <p>Oszczędzaj czas dzięki automatyzacji procesów, integracjom systemów, botom oraz połączeniom API.</p>
+              <div class="acc-tags">
+                <span>BOTS</span><span>WORKFLOWS</span><span>API</span><span>INTEGRATIONS</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item glass">
+            <button class="accordion-header">
+              <span class="acc-num">08</span>
+              <span class="acc-title">SEO</span>
+              <i class="ri-add-line acc-icon"></i>
+            </button>
+            <div class="accordion-content">
+              <p>Optymalizacja techniczna stron pod kątem wyszukiwarki Google, szybkości ładowania (Core Web Vitals) i wyższych pozycji w wynikach.</p>
+              <div class="acc-tags">
+                <span>TECHNICAL SEO</span><span>CORE WEB VITALS</span><span>STRUCTURED DATA</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cta-box glass">
+          <h3 class="cta-title">MASZ POMYSŁ? <span class="gradient-text">ZBUDUJMY GO RAZEM.</span></h3>
+          <a href="#contact" class="btn btn-primary">POROZMAWIAJMY <i class="ri-arrow-right-line"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. PROJEKTY SECTION -->
+    <section id="projects" class="projects-section section-padding">
+      <div class="container">
+        <div class="section-tag">03 / PROJEKTY</div>
+        <h2 class="section-title">
+          PROJEKTY,<br>
+          <span class="gradient-text">KTÓRE STWORZYŁEM.</span>
+        </h2>
+
+        <!-- Featured Project: YappTalk -->
+        <div class="project-featured glass">
+          <div class="project-media">
+            <video class="project-video" autoplay muted loop playsinline preload="metadata" style="will-change: transform; transform: translateZ(0);">
+
+              <source src="assets/videos/yapptalk.mp4" type="video/mp4">
+              Twoja przeglądarka nie obsługuje odtwarzacza wideo.
+            </video>
+            <div class="video-overlay"></div>
+          </div>
+
+          <div class="project-info">
+            <div class="project-badges">
+              <span class="badge badge-status">IN DEVELOPMENT</span>
+              <span class="badge badge-type">APLIKACJA SPOŁECZNOŚCIOWA</span>
+            </div>
+
+            <h3 class="project-title">YappTalk</h3>
+            <p class="project-desc">
+              YappTalk to aplikacja przeznaczona dla osób, które chcą poznać nowych ludzi, porozmawiać lub po prostu spędzić czas z kimś nowym.
+            </p>
+
+            <div class="project-meta-grid">
+              <div class="meta-item">
+                <span class="meta-label">ROLE</span>
+                <span class="meta-val">Development</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">DESIGN</span>
+                <span class="meta-val">UI / UX</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">STATUS</span>
+                <span class="meta-val">In Development</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">YEAR</span>
+                <span class="meta-val">2026</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Placeholders for future projects -->
+        <div class="projects-grid">
+          <div class="project-card-placeholder glass">
+            <div class="placeholder-content">
+              <i class="ri-code-s-slash-line"></i>
+              <h4>KOLEJNY PROJEKT</h4>
+              <span class="badge">W PRZYGOTOWANIU</span>
+            </div>
+          </div>
+          <div class="project-card-placeholder glass">
+            <div class="placeholder-content">
+              <i class="ri-layout-4-line"></i>
+              <h4>KOLEJNY PROJEKT</h4>
+              <span class="badge">W PRZYGOTOWANIU</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. TECHNOLOGIE SECTION -->
+    <section id="tech" class="tech-section section-padding">
+      <div class="container">
+        <div class="section-tag">04 / TECHNOLOGIE</div>
+        <h2 class="section-title">
+          NARZĘDZIA,<br>
+          <span class="gradient-text">KTÓRYMI BUDUJĘ.</span>
+        </h2>
+
+        <div class="tech-grid">
+          <div class="tech-card glass"><i class="ri-html5-line"></i><span>HTML5</span></div>
+          <div class="tech-card glass"><i class="ri-css3-line"></i><span>CSS3 / SCSS</span></div>
+          <div class="tech-card glass"><i class="ri-javascript-line"></i><span>JavaScript</span></div>
+          <div class="tech-card glass"><i class="ri-node-tree"></i><span>Node.js</span></div>
+          <div class="tech-card glass"><i class="ri-fire-line"></i><span>Firebase</span></div>
+          <div class="tech-card glass"><i class="ri-git-branch-line"></i><span>Git</span></div>
+          <div class="tech-card glass"><i class="ri-figma-line"></i><span>Figma</span></div>
+          <div class="tech-card glass"><i class="ri-pantone-line"></i><span>UI / UX</span></div>
+          <div class="tech-card glass"><i class="ri-box-3-line"></i><span>Three.js</span></div>
+          <div class="tech-card glass"><i class="ri-speed-up-line"></i><span>GSAP</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. PROCES SECTION -->
+    <section id="process" class="process-section section-padding">
+      <div class="container">
+        <div class="section-tag">05 / PROCES</div>
+        <h2 class="section-title">
+          OD POMYSŁU<br>
+          <span class="gradient-text">DO GOTOWEGO PRODUKTU.</span>
+        </h2>
+
+        <div class="process-timeline">
+          <div class="process-step glass">
+            <span class="step-num">01</span>
+            <h4>Discovery</h4>
+            <p>Poznaję Twoje potrzeby, cele biznesowe oraz grupę docelową projektu.</p>
+          </div>
+          <div class="process-step glass">
+            <span class="step-num">02</span>
+            <h4>Strategia</h4>
+            <p>Planujemy architekturę informacji, stos technologiczny i makietę funkcjonalną.</p>
+          </div>
+          <div class="process-step glass">
+            <span class="step-num">03</span>
+            <h4>Design</h4>
+            <p>Tworzę nowoczesne i dopracowane wizualnie interfejsy UI/UX dopasowane do marki.</p>
+          </div>
+          <div class="process-step glass">
+            <span class="step-num">04</span>
+            <h4>Development</h4>
+            <p>Piszę czysty, szybki i responsywny kod z dbałością o każdy detale i animacje.</p>
+          </div>
+          <div class="process-step glass">
+            <span class="step-num">05</span>
+            <h4>Testing</h4>
+            <p>Sprawdzam działanie na różnych urządzeniach, wydajność oraz poprawność SEO.</p>
+          </div>
+          <div class="process-step glass">
+            <span class="step-num">06</span>
+            <h4>Launch</h4>
+            <p>Podpinam domenę, konfiguruję SSL, serwer i oficjalnie uruchamiam stronę.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. KONTAKT SECTION (Multi-step Form) -->
+    <section id="contact" class="contact-section section-padding">
+      <div class="container">
+        <div class="section-tag">06 / KONTAKT</div>
+        <h2 class="section-title">
+          MASZ PROJEKT?<br>
+          <span class="gradient-text">POROZMAWIAJMY.</span>
+        </h2>
+
+        <div class="contact-grid">
+          <!-- Form Multi-Step -->
+          <div class="form-wrapper glass">
+            <div class="form-steps-indicator">
+              <div class="step-dot active" data-step="1">01</div>
+              <div class="step-line"></div>
+              <div class="step-dot" data-step="2">02</div>
+              <div class="step-line"></div>
+              <div class="step-dot" data-step="3">03</div>
+              <div class="step-line"></div>
+              <div class="step-dot" data-step="4">04</div>
+            </div>
+
+            <form id="contact-form">
+              <!-- Krok 1: O Tobie -->
+              <div class="form-step step-1 active">
+                <h3>01 / O TOBIE</h3>
+                <div class="input-group">
+                  <label for="name">Imię i nazwisko *</label>
+                  <input type="text" id="name" name="name" placeholder="Jan Kowalski" required>
+                </div>
+                <div class="input-group">
+                  <label for="email">E-mail *</label>
+                  <input type="email" id="email" name="email" placeholder="jan@example.com" required>
+                </div>
+                <div class="input-group">
+                  <label for="phone">Telefon</label>
+                  <input type="tel" id="phone" name="phone" placeholder="+48 123 456 789">
+                </div>
+                <div class="input-group">
+                  <label for="company">Firma</label>
+                  <input type="text" id="company" name="company" placeholder="Nazwa firmy (opcjonalnie)">
+                </div>
+                <button type="button" class="btn btn-primary btn-next">DALEJ <i class="ri-arrow-right-line"></i></button>
+              </div>
+
+              <!-- Krok 2: Projekt -->
+              <div class="form-step step-2">
+                <h3>02 / PROJEKT</h3>
+                <label class="label-heading">Rodzaj projektu *</label>
+                <div class="project-options-grid">
+                  <label class="radio-card">
+                    <input type="radio" name="project_type" value="Strona internetowa" checked>
+                    <span>Strona internetowa</span>
+                  </label>
+                  <label class="radio-card">
+                    <input type="radio" name="project_type" value="PWA">
+                    <span>PWA</span>
+                  </label>
+                  <label class="radio-card">
+                    <input type="radio" name="project_type" value="Aplikacja">
+                    <span>Aplikacja</span>
+                  </label>
+                  <label class="radio-card">
+                    <input type="radio" name="project_type" value="Gra">
+                    <span>Gra</span>
+                  </label>
+                  <label class="radio-card">
+                    <input type="radio" name="project_type" value="UI / UX">
+                    <span>UI / UX</span>
+                  </label>
+                  <label class="radio-card">
+                    <input type="radio" name="project_type" value="Automatyzacja">
+                    <span>Automatyzacja</span>
+                  </label>
+                  <label class="radio-card">
+                    <input type="radio" name="project_type" value="SEO">
+                    <span>SEO</span>
+                  </label>
+                  <label class="radio-card">
+                    <input type="radio" name="project_type" value="Inne">
+                    <span>Inne</span>
+                  </label>
+                </div>
+
+                <div class="input-group" style="margin-top: 1.5rem;">
+                  <label for="message">Opis projektu *</label>
+                  <textarea id="message" name="message" rows="4" placeholder="Opisz krótko swój cel, wymagania lub wizję..." required></textarea>
+                </div>
+
+                <div class="form-btn-group">
+                  <button type="button" class="btn btn-secondary btn-prev"><i class="ri-arrow-left-line"></i> WSTECZ</button>
+                  <button type="button" class="btn btn-primary btn-next">DALEJ <i class="ri-arrow-right-line"></i></button>
+                </div>
+              </div>
+
+              <!-- Krok 3: Szczegóły -->
+              <div class="form-step step-3">
+                <h3>03 / SZCZEGÓŁY</h3>
+                <div class="input-group">
+                  <label for="deadline">Planowany termin</label>
+                  <input type="text" id="deadline" name="deadline" placeholder="np. Kwiecień 2026 / Pilne">
+                </div>
+                <div class="input-group">
+                  <label for="budget">Szacowany budżet</label>
+                  <input type="text" id="budget" name="budget" placeholder="np. 3 000 - 5 000 PLN">
+                </div>
+
+                <div class="checkbox-group">
+                  <input type="checkbox" id="consent" name="consent" required>
+                  <label for="consent">Zgadzam się na kontakt w celu odpowiedzi na zapytanie oraz akceptuje regulamin i politykę prywatności. *</label>
+                </div>
+
+                <div class="form-btn-group">
+                  <button type="button" class="btn btn-secondary btn-prev"><i class="ri-arrow-left-line"></i> WSTECZ</button>
+                  <button type="button" class="btn btn-primary btn-next">PODSUMOWANIE <i class="ri-arrow-right-line"></i></button>
+                </div>
+              </div>
+
+              <!-- Krok 4: Podsumowanie -->
+              <div class="form-step step-4">
+                <h3>04 / PODSUMOWANIE</h3>
+                <p class="summary-desc">Sprawdź poprawność wprowadzonych danych przed wysłaniem zlecenia.</p>
+
+                <div class="summary-box glass">
+                  <p><strong>Imię i e-mail:</strong> <span id="sum-name"></span> (<span id="sum-email"></span>)</p>
+                  <p><strong>Typ projektu:</strong> <span id="sum-type"></span></p>
+                  <p><strong>Opis:</strong> <span id="sum-message"></span></p>
+                </div>
+
+                <div class="form-btn-group">
+                  <button type="button" class="btn btn-secondary btn-prev"><i class="ri-arrow-left-line"></i> WSTECZ</button>
+                  <button type="submit" class="btn btn-primary btn-submit">
+                    <span>WYŚLIJ ZAPYTANIE</span>
+                    <i class="ri-send-plane-fill"></i>
+                  </button>
+                </div>
+                <div id="form-status-message" class="status-msg"></div>
+              </div>
+            </form>
+            <!-- Success Screen (Pojawia się po wysłaniu) -->
+<div id="form-success-card" class="success-card" style="display: none; text-align: center; padding: 2rem 1rem;">
+  <div class="success-icon" style="font-size: 3.5rem; color: #00f2fe; margin-bottom: 1rem;">
+    ✓
+  </div>
+  <h3 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem;" class="gradient-text">WIADOMOŚĆ WYSŁANA!</h3>
+  <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 2rem; font-size: 0.95rem;">Dziękuję za kontakt. Odpowiem najszybciej, jak to możliwe!</p>
+  <button id="btn-reset-form" type="button" class="btn btn-primary" style="margin: 0 auto;">
+    Powrót do strony
+  </button>
+</div>
+
+          <!-- Direct Info -->
+          <div class="contact-info-col">
+            <div class="info-card glass">
+              <i class="ri-mail-send-line"></i>
+              <h4>Napisz bezpośrednio</h4>
+              <a href="mailto:kontakt@maciejmatuszewski.pl">kontakt@maciejmatuszewski.pl</a>
+            </div>
+            <div class="info-card glass">
+              <i class="ri-instagram-line"></i>
+              <h4>Instagram</h4>
+              <a href="https://instagram.com/m_m_xx09" target="_blank" rel="noopener">@m_m_xx09</a>
+            </div>
+            <div class="info-card glass">
+              <i class="ri-map-pin-line"></i>
+              <h4>Lokalizacja</h4>
+              <p>Poznań, Poland</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="assets/images/logo.png" alt="Logo" style="height: 40px; width: auto; object-fit: contain; border-radius: 8px;">
+
+        </div>
+        <h3>MACIEJ MATUSZEWSKI</h3>
+        <p>WEB DEVELOPER · INTERFACE DESIGNER</p>
+        <p class="footer-loc">POZNAŃ · POLAND</p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Nawigacja</h4>
+        <ul>
+          <li><a href="#about">O mnie</a></li>
+          <li><a href="#services">Usługi</a></li>
+          <li><a href="#projects">Projekty</a></li>
+          <li><a href="#tech">Technologie</a></li>
+          <li><a href="#process">Proces</a></li>
+          <li><a href="#contact">Kontakt</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-socials">
+        <h4>Social Media</h4>
+        <ul>
+          <li><a href="https://instagram.com/m_m_xx09" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="mailto:kontakt@maciejmatuszewski.pl">E-mail</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+  <p>&copy; 2026 MACIEJ MATUSZEWSKI. Wszelkie prawa zastrzeżone.</p>
+  <a href="assets/docs/regulamin_i_politykaprywatnosci.pdf" target="_blank" style="color: rgba(255, 255, 255, 0.6); font-size: 0.85rem; text-decoration: underline;">Regulamin i Polityka Prywatności</a>
+</div>
+
+  </footer>
+<!-- Cookie Consent Banner -->
+<div id="cookie-banner" class="cookie-banner glass" style="display: none;">
+  <div class="cookie-content">
+    <div class="cookie-icon">
+      <i class="ri-cookie-line"></i>
+    </div>
+    <div class="cookie-text">
+      <h4>Pliki Cookies & Privacym</h4>
+      <p>Używamy plików cookies, aby zapamiętać Twoje wybory w formularzu, preferencje motywu oraz lokalizację dla lepszego działania strony.</p>
+    </div>
+  </div>
+  <div class="cookie-actions">
+    <button id="btn-cookie-necessary" class="btn btn-outline-sm">Akceptuj niezbędne</button>
+    <button id="btn-cookie-accept" class="btn btn-primary-sm">Akceptuję wszystkie</button>
+  </div>
+</div>
+  <!-- Clean, Stable Inline JS -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      
+      // 1. HAMBURGER MENU
+      var menuBtn = document.getElementById('menu-toggle');
+      var mobileMenu = document.querySelector('.mobile-menu');
+
+      if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          mobileMenu.classList.toggle('active');
+        });
+      }
+
+      var links = document.querySelectorAll('.mobile-link');
+      links.forEach(function(l) {
+        l.addEventListener('click', function() {
+          if (mobileMenu) mobileMenu.classList.remove('active');
+        });
+      });
+
+      // 2. THEME TOGGLE
+      var themeBtn = document.getElementById('theme-toggle');
+      var html = document.documentElement;
+
+      if (themeBtn) {
+        themeBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          if (html.classList.contains('dark')) {
+            html.classList.remove('dark');
+            html.classList.add('light');
+          } else {
+            html.classList.remove('light');
+            html.classList.add('dark');
+          }
+        });
+      }
+
+      // 3. ACCORDION (SERVICES)
+      var accHeaders = document.querySelectorAll('.accordion-header');
+      accHeaders.forEach(function (header) {
+        header.addEventListener('click', function (e) {
+          e.preventDefault();
+          var parentItem = header.parentElement;
+          
+          if (parentItem.classList.contains('active')) {
+            parentItem.classList.remove('active');
+          } else {
+            document.querySelectorAll('.accordion-item').forEach(function(item) {
+              item.classList.remove('active');
+            });
+            parentItem.classList.add('active');
+          }
+        });
+      });
+
+      // 4. THREE.JS 3D HERO SCENE
+      (function initThreeHero() {
+        var container = document.getElementById('canvas-3d-hero');
+        if (!container || typeof THREE === 'undefined') return;
+
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+        camera.position.z = 4.2;
+
+        var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        container.appendChild(renderer.domElement);
+
+        var geometry = new THREE.TorusKnotGeometry(1.1, 0.3, 100, 16);
+        var material = new THREE.MeshBasicMaterial({
+          color: 0x8B5CF6,
+          wireframe: true,
+          transparent: true,
+          opacity: 0.35
+        });
+        var torusKnot = new THREE.Mesh(geometry, material);
+        scene.add(torusKnot);
+
+        var particlesGeo = new THREE.BufferGeometry();
+        var particlesCount = 180;
+        var posArray = new Float32Array(particlesCount * 3);
+
+        for (var i = 0; i < particlesCount * 3; i++) {
+          posArray[i] = (Math.random() - 0.5) * 8;
+        }
+
+        particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        var particlesMat = new THREE.PointsMaterial({
+          size: 0.035,
+          color: 0x06B6D4,
+          transparent: true,
+          opacity: 0.8
+        });
+        var particlesMesh = new THREE.Points(particlesGeo, particlesMat);
+        scene.add(particlesMesh);
+
+        function animate() {
+          requestAnimationFrame(animate);
+          torusKnot.rotation.x += 0.005;
+          torusKnot.rotation.y += 0.008;
+          particlesMesh.rotation.y -= 0.002;
+          renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', function() {
+          if (!container) return;
+          camera.aspect = container.clientWidth / container.clientHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+      })();
+      // 5. GSAP SCROLL ANIMATIONS
+      if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Animacja nagłówków sekcji
+        gsap.utils.toArray('.section-title').forEach(function (title) {
+          gsap.from(title, {
+            y: 30,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: title,
+              start: "top 85%"
+            }
+          });
+        });
+
+        // Kaskadowe wyłanianie kafelków (Stagger)
+        const animateGrid = (selector) => {
+          gsap.from(selector, {
+            y: 40,
+            opacity: 0,
+            duration: 0.7,
+            stagger: 0.12,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: selector,
+              start: "top 85%"
+            }
+          });
+        };
+
+        animateGrid('.stat-card');
+        animateGrid('.tech-card');
+        animateGrid('.process-step');
+        animateGrid('.info-card');
+      }
+      // 6. MULTI-STEP FORM NAVIGATION
+      const formSteps = document.querySelectorAll('.form-step');
+      const stepDots = document.querySelectorAll('.step-dot');
+      let currentStep = 0;
+
+      function updateFormStep(stepIndex) {
+        formSteps.forEach((step, idx) => {
+          step.classList.toggle('active', idx === stepIndex);
+        });
+
+        stepDots.forEach((dot, idx) => {
+          dot.classList.toggle('active', idx <= stepIndex);
+        });
+
+        // Wypełnianie podsumowania w Kroku 4
+        if (stepIndex === 3) {
+          document.getElementById('sum-name').textContent = document.getElementById('name').value || 'Brak';
+          document.getElementById('sum-email').textContent = document.getElementById('email').value || 'Brak';
+          
+          const selectedType = document.querySelector('input[name="project_type"]:checked');
+          document.getElementById('sum-type').textContent = selectedType ? selectedType.value : 'Brak';
+          
+          document.getElementById('sum-message').textContent = document.getElementById('message').value || 'Brak';
+        }
+      }
+
+      // Przyciski "DALEJ"
+      document.querySelectorAll('.btn-next').forEach(button => {
+        button.addEventListener('click', () => {
+          // Walidacja obecnego kroku
+          const currentInputs = formSteps[currentStep].querySelectorAll('input[required], textarea[required]');
+          let isValid = true;
+
+          currentInputs.forEach(input => {
+            if (!input.checkValidity()) {
+              input.reportValidity();
+              isValid = false;
+            }
+          });
+
+          if (isValid && currentStep < formSteps.length - 1) {
+            currentStep++;
+            updateFormStep(currentStep);
+          }
+        });
+      });
+
+      // Przyciski "WSTECZ"
+      document.querySelectorAll('.btn-prev').forEach(button => {
+        button.addEventListener('click', () => {
+          if (currentStep > 0) {
+            currentStep--;
+            updateFormStep(currentStep);
+          }
+        });
+      });
+
+      // Wysyłanie formularza
+      // Wysyłanie formularza z animacją wylecenia i konfetti
+      const contactForm = document.getElementById('contact-form');
+      const successCard = document.getElementById('form-success-card');
+      const resetBtn = document.getElementById('btn-reset-form');
+
+      if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+
+          // 1. Odpalenie konfetti 🎊
+          if (typeof confetti === 'function') {
+            confetti({
+              particleCount: 50,
+              spread: 60,
+              origin: { y: 0.7 }
+            });
+          }
+
+          // 2. Animacja podskoku i wylecenia do góry za pomocą GSAP
+          if (typeof gsap !== 'undefined') {
+            gsap.to(contactForm, {
+              y: -80,
+              opacity: 0,
+              duration: 0.5,
+              ease: "back.in(1.7)",
+              onComplete: () => {
+                contactForm.style.display = 'none';
+                successCard.style.display = 'block';
+                
+                gsap.fromTo(successCard, 
+                  { y: 30, opacity: 0 }, 
+                  { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" }
+                );
+              }
+            });
+          } else {
+            contactForm.style.display = 'none';
+            successCard.style.display = 'block';
+          }
+        });
+      }
+
+      // Przywrócenie formularza ("Powrót do strony")
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          if (typeof gsap !== 'undefined') {
+            gsap.to(successCard, {
+              opacity: 0,
+              duration: 0.3,
+              onComplete: () => {
+                successCard.style.display = 'none';
+                contactForm.reset();
+                if (typeof currentStep !== 'undefined') {
+                  currentStep = 0;
+                  updateFormStep(0);
+                }
+                
+                contactForm.style.display = 'flex';
+                gsap.fromTo(contactForm, 
+                  { y: 0, opacity: 0 }, 
+                  { opacity: 1, duration: 0.4 }
+                );
+              }
+            });
+          }
+        });
+      }
+            // 7. COOKIE CONSENT BANNER & LOCALSTORAGE
+      const cookieBanner = document.getElementById('cookie-banner');
+      const btnAcceptAll = document.getElementById('btn-cookie-accept');
+      const btnAcceptNec = document.getElementById('btn-cookie-necessary');
+
+      // Pokazuj baner tylko wtedy, gdy brak zgody w pamięci przeglądarki
+      if (cookieBanner && !localStorage.getItem('cookieConsent')) {
+        setTimeout(() => {
+          cookieBanner.style.display = 'flex';
+          if (typeof gsap !== 'undefined') {
+            gsap.fromTo(cookieBanner, 
+              { y: 50, opacity: 0 }, 
+              { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" }
+            );
+          }
+        }, 1000);
+      }
+
+      function hideCookieBanner() {
+        if (typeof gsap !== 'undefined') {
+          gsap.to(cookieBanner, { 
+            y: 50, 
+            opacity: 0, 
+            duration: 0.4, 
+            onComplete: () => { cookieBanner.style.display = 'none'; } 
+          });
+        } else {
+          cookieBanner.style.display = 'none';
+        }
+      }
+
+      if (btnAcceptAll) {
+        btnAcceptAll.addEventListener('click', () => {
+          localStorage.setItem('cookieConsent', 'all');
+          hideCookieBanner();
+        });
+      }
+
+      if (btnAcceptNec) {
+        btnAcceptNec.addEventListener('click', () => {
+          localStorage.setItem('cookieConsent', 'necessary');
+          hideCookieBanner();
+        });
+      }
+
+    });
+    
+  </script>
+  <!-- Toast Notification (Powiadomienie o skopiowaniu maila) -->
+<div id="toast" class="toast">
+  <i class="ri-checkbox-circle-fill"></i> Skopiowano e-mail do schowka! 📋
+</div>
+
+<!-- Przycisk Powrót na Górę (Back to Top) -->
+<button id="back-to-top" class="back-to-top" aria-label="Powrót na górę">
+  <i class="ri-arrow-up-line"></i>
+</button>
+<!-- Szklany Przycisk Powrót na Górę -->
+<button id="back-to-top" class="back-to-top" aria-label="Powrót na górę" title="Powrót na górę">
+  <i class="ri-arrow-up-line"></i>
+</button>
+<!-- Szklany Dock Overlay - Powrót na Górę (Dół Środek) -->
+<div id="bottom-back-to-top" class="bottom-dock-overlay" role="button" aria-label="Powrót na górę">
+  <i class="ri-arrow-up-s-line"></i>
+  <span>Powrót na górę</span>
+</div>
+<div class="custom-cursor-dot" id="cursor-dot"></div>
+<div class="custom-cursor-ring" id="cursor-ring"></div>
+<div id="scroll-progress-bar" class="scroll-progress"></div>
+
+</body>
+</html>
+  
